@@ -1,0 +1,43 @@
+import wollok.game.*
+import granjaVilla.*
+import cultivos.*
+
+program granjaVilla {
+	
+	
+//	CONFIG	
+	game.title("Granja Villa")
+	game.height(10)
+	game.width(15)
+	game.ground("ground.png")
+	
+//	VISUALES
+	game.addVisual(hector)
+	
+// TECLADO
+	keyboard.up().onPressDo { hector.move(hector.position().up(1)) }
+	keyboard.down().onPressDo { hector.move(hector.position().down(1)) }
+	keyboard.left().onPressDo { hector.move(hector.position().left(1)) }
+	keyboard.right().onPressDo { hector.move(hector.position().right(1)) }
+	keyboard.m().onPressDo { hector.sembrar(new Maiz(position = hector.position()))}
+	keyboard.t().onPressDo { hector.sembrar(new Trigo(position = hector.position()))}
+	keyboard.o().onPressDo { hector.sembrar(new Tomaco(position = hector.position()))}
+	keyboard.r().onPressDo { hector.regar()}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//	START
+	game.start()
+}
