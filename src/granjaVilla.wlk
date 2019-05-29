@@ -13,15 +13,16 @@ object hector {
 	}
 	method regar(){
 		if (self.hayCultivo()) {
-			game.colliders(self).forEach({cultivo => cultivo.estasSiendoRegado()})
+			self.cultivos().forEach({cultivo => cultivo.estasSiendoRegado()})
 		}
 		else {
 			game.say(self, "no tengo nada para regar")
 		}
 	}
 	method hayCultivo() {
-		return not game.colliders(self).isEmpty()
+		return game.colliders(self).any({objeto => objeto.esCultivo()})
 	}
+	method cultivos() = game.colliders(self).filter({objeto => objeto.esCultivo()})
 	method cosechar() {
 		if(self.hayCultivo()){
 			self.plantasQueSePuedenCosechar().forEach({cultivo => plantasParaVender.add(cultivo)})
@@ -30,10 +31,30 @@ object hector {
 		else {game.say(self, "no hay nada para cosechar")}
 	}
 	method plantasQueSePuedenCosechar(){
-		return game.colliders(self).filter({cultivo => cultivo.puedeSerCosechado()})
+		return self.cultivos().filter({cultivo => cultivo.puedeSerCosechado()})
 	}
 	method vender() {
-		dinero += plantasParaVender.sum({cultivo => cultivo.valor()})
-		plantasParaVender.clear()
+		if (not self.estoyEnUnMercado()) {
+			game.say(self, "no estoy en un mercado")
+		}
+		else if (self.mercadoEnElQueEstoy().dinero() < self.valorDeLasPlantas()){
+			game.say(self, "el mercado no tiene dinero")
+		}
+		else {
+			self.mercadoEnElQueEstoy().teEstanVendiendo(plantasParaVender)
+			dinero += self.valorDeLasPlantas()
+			plantasParaVender.clear()
+			
+			}
+	}
+	method estoyEnUnMercado() {
+		return game.colliders(self).any({objeto => not objeto.esCultivo()})
+	}
+	method mercadoEnElQueEstoy(){
+		return game.colliders(self).find({objeto => not objeto.esCultivo()})
+	}
+	method valorDeLasPlantas() = plantasParaVender.sum({cultivo => cultivo.valor()})
+	method hablar(){
+		game.say(self, "tengo" + self.plantasParaVender().size() + "plantas para vender y" + self.dinero() + "monedas")
 	}
 }

@@ -1,5 +1,9 @@
 import wollok.game.*
-class Maiz {
+
+class Cultivo {
+	const property esCultivo = true
+}
+class Maiz inherits Cultivo{
 	var esAdulta = false
 	var property image = "corn_baby.png"
 	var property position
@@ -13,7 +17,7 @@ class Maiz {
 	method puedeSerCosechado() = esAdulta
 }
 
-class Trigo {
+class Trigo inherits Cultivo{
 	var property image = "wheat_0.png"
 	var etapas = [0, 1, 2, 3]
 	var property position
@@ -24,10 +28,10 @@ class Trigo {
 	}
 	method etapa() = etapas.head()
 	method puedeSerCosechado() = self.etapa() >= 2
-	method valor() = if (self.etapa() == 0 ) {0} else {self.etapa() -1 * 100}
+	method valor() = self.etapa() -1 * 100
 }
 
-class Tomaco {
+class Tomaco inherits Cultivo{
 	var property image = "tomaco.png"
 	var property position 
 	const property valor = 80
