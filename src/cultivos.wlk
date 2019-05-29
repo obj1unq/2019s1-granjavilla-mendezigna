@@ -3,7 +3,7 @@ class Maiz {
 	var esAdulta = false
 	var property image = "corn_baby.png"
 	var property position
-
+	const property valor = 150
 	method estasSiendoRegado(){
 		if (not esAdulta){ 
 			esAdulta = true
@@ -15,19 +15,22 @@ class Maiz {
 
 class Trigo {
 	var property image = "wheat_0.png"
-	var etapaEvolucion = [0, 1, 2, 3]
+	var etapas = [0, 1, 2, 3]
 	var property position
 	method estasSiendoRegado(){
-		etapaEvolucion.add(etapaEvolucion.head())
-		etapaEvolucion.remove(etapaEvolucion.head())
-		image = "wheat_" + etapaEvolucion.head().toString() + ".png"
+		etapas.add(self.etapa())
+		etapas.remove(self.etapa())
+		image = "wheat_" + self.etapa().toString() + ".png"
 	}
-	method puedeSerCosechado() = etapaEvolucion.head() >= 2
+	method etapa() = etapas.head()
+	method puedeSerCosechado() = self.etapa() >= 2
+	method valor() = if (self.etapa() == 0 ) {0} else {self.etapa() -1 * 100}
 }
 
 class Tomaco {
 	var property image = "tomaco.png"
 	var property position 
+	const property valor = 80
 	method estasSiendoRegado(){
 		if (game.height() - 1 == position.y()) {
 			position = game.at(position.x(), 0)

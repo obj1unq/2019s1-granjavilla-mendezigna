@@ -23,6 +23,9 @@ program granjaVilla {
 	keyboard.t().onPressDo { hector.sembrar(new Trigo(position = hector.position()))}
 	keyboard.o().onPressDo { hector.sembrar(new Tomaco(position = hector.position()))}
 	keyboard.r().onPressDo { hector.regar()}
+	keyboard.c().onPressDo { hector.cosechar()}
+	keyboard.c().onPressDo { hector.vender()}
+	keyboard.backspace() {game.say(hector, "tengo para vender" + hector.plantasParaVender().size() + "y" + hector.dinero() + "oro")}
 	
 	
 	
