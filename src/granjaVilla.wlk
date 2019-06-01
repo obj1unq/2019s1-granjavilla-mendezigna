@@ -55,6 +55,6 @@ object hector {
 	}
 	method valorDeLasPlantas() = plantasParaVender.sum({cultivo => cultivo.valor()})
 	method hablar(){
-		game.say(self, "tengo" + self.plantasParaVender().size() + "plantas para vender y" + self.dinero() + "monedas")
+		game.say(self, "tengo " + self.plantasParaVender().size() + "plantas para vender y " + self.dinero() + " monedas")
 	}
 }
